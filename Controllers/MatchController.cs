@@ -30,9 +30,9 @@ namespace FootballLeague.Controllers
 
         [HttpPost]
         [Route("[controller]/Create")]
-        public IActionResult CreateMatch(string name, string homeTeamId, string awayTeamId, int homePoints, int awayPoints)
+        public IActionResult CreateMatch(string name)
         {
-            this.matchService.CreateMatch(name, homeTeamId, awayTeamId, homePoints, awayPoints);
+            this.matchService.CreateMatch(name);
             return Ok();
         }
 
@@ -66,6 +66,20 @@ namespace FootballLeague.Controllers
             }
         }
 
+        [HttpPut]
+        [Route("[controller]/AddResult")]
+        public IActionResult AddResult(string matchId, string homeTeamId, string awayTeamId, int homePoints, int awayPoints)
+        {
+            try
+            {
+                this.matchService.AddResult(matchId, homeTeamId, awayTeamId, homePoints, awayPoints);
+                return Ok();
+            }
+            catch (Exception exeption)
+            {
+                throw exeption;
+            }
+        }
         [HttpDelete]
         [Route("[controller]/DeleteMatch")]
         public IActionResult DeleteMatch(string matchId)

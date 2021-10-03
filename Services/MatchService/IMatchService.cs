@@ -5,7 +5,7 @@ namespace FootballLeague.Services.MatchService
 {
     public interface IMatchService
     {
-        void CreateMatch(string name, string homeTeamId, string awayTeamId, int homePoints, int awayPoints);
+        void CreateMatch(string name);
 
         void ActivateMatch(string matchId);
 
@@ -14,6 +14,8 @@ namespace FootballLeague.Services.MatchService
         void DeleteMatch(string matchId);
 
         bool IsPlayed(string matchId);
+
+        void AddResult(string matchId, string homeTeamId, string awayTeamId, int homePoints, int awayPoints);
 
         ICollection<Match> AllPlayedMatches();
 

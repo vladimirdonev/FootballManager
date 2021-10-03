@@ -31,7 +31,7 @@ namespace FootballLeague.Services.MatchService
             
         }
 
-        public void CreateMatch(string name, string homeTeamId, string awayTeamId, int homePoints, int awayPoints)
+        public void CreateMatch(string name)
         {
             var match = new Match();
             match.Name = name;
@@ -103,6 +103,28 @@ namespace FootballLeague.Services.MatchService
         public ICollection<Match> AllNotPlayedMatches()
         {
             return this.db.Matches.Where(x => !x.IsPlayed).ToList();
+        }
+
+        public void AddResult(string matchId, string homeTeamId, string awayTeamId, int homePoints, int awayPoints)
+        {
+            var match = this.db.Matches.FirstOrDefault(x => x.Id == matchId);
+            if (match == null)
+            {
+                throw new InvalidOperationException(exceptionMessage);
+            }
+            else if (IsPlayed(matchId))
+            {
+
+            }
+
+            match.HomeTeamId = homeTeamId;
+            match.AwayTeamId = awayTeamId;
+            match.HomePoints = homePoints;
+            match.AwayPoints = awayPoints;
+
+            this.db.Entry(match).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
+            this.db.Update(match);
+            this.db.SaveChanges();
         }
     }
 }
